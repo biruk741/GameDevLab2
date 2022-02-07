@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Glock
+  - Bullet
+  - Coin
+  - Enemy
   layers:
   - Default
   - TransparentFX
