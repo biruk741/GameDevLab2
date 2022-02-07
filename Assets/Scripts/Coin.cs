@@ -4,22 +4,20 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.collider.tag == "Player") {
-            Destroy(gameObject);
+        if (collision.gameObject.CompareTag("Player"))
+        {
+
+            StartCoroutine(takeCoin());
         }
     }
+    IEnumerator takeCoin() {
+        GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 6000));
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
+    }
+
 }

@@ -59,11 +59,12 @@ public class EnemyFly : MonoBehaviour
         Destroy(gameObject);
     }
 
+    private static readonly WaitForSeconds flashWait = new WaitForSeconds(0.1f);
     IEnumerator damageCharacter()
     {
         health -= 20;
         GetComponent<SpriteRenderer>().color = Color.blue;
-        yield return new WaitForSeconds(0.1f);
+        yield return flashWait;
         GetComponent<SpriteRenderer>().color = Color.white;
     }
 }

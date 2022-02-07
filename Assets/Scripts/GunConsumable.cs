@@ -16,10 +16,11 @@ public class GunConsumable : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.collider.tag == "Player") { StartCoroutine(takeGun()); }
+        if (collision.gameObject.CompareTag("Player")) { StartCoroutine(takeGun()); }
     }
+
 
     IEnumerator takeGun()
     {

@@ -50,16 +50,16 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.Space)) if(mainRigidBody.velocity.y==0) mainRigidBody.AddForce(new Vector2(0,jumpSpeed));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("glock?");
-        if (collision.collider.tag == "Glock") {
-            transform.GetChild(0).gameObject.SetActive(true);
-        }
-        if (collision.collider.tag == "Coin")
-        {
+        if (collision.gameObject.CompareTag("Glock")) { transform.GetChild(0).gameObject.SetActive(true); }
+        if (collision.gameObject.CompareTag("Coin")) {
             coins++;
             coinCounter.SetText(coins + "");
         }
+
+
     }
 }
