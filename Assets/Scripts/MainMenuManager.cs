@@ -11,6 +11,7 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button closeCreditsButton;
     [SerializeField] private GameObject creditsUI;
     [SerializeField] private Button platformerButton;
+    [SerializeField] private Button spawnButton;
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +27,9 @@ public class MainMenuManager : MonoBehaviour
         });
         platformerButton.onClick.AddListener(() => {
             LoadingScreen.LoadScene("NotQuitePlatformerScene");
+        });
+        spawnButton.onClick.AddListener(() => {
+            LoadingScreen.LoadScene("3DSpawn");
         });
     }
 
