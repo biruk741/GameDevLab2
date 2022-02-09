@@ -10,6 +10,8 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private Button openCreditsButton;
     [SerializeField] private Button closeCreditsButton;
     [SerializeField] private GameObject creditsUI;
+    [SerializeField] private Button platformerButton;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,9 @@ public class MainMenuManager : MonoBehaviour
         });
         closeCreditsButton.onClick.AddListener(() => {
             creditsUI.SetActive(false);
+        });
+        platformerButton.onClick.AddListener(() => {
+            LoadingScreen.LoadScene("NotQuitePlatformerScene");
         });
     }
 
