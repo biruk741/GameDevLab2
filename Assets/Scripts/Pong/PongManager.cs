@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class PongManager : MonoBehaviour
 {
+    [SerializeField] private Goal leftGoal;
+
+    private void Awake()
+    {
+        p1Goal.onScore += HandleP2Score;
+        p2Goal.onScore += HandleP1Score;
+        ball.Restart();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
