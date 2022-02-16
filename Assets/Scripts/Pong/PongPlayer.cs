@@ -22,7 +22,6 @@ public class PongPlayer : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        print(transform.position.y);
         if (Input.GetKey(upKey) && transform.position.y < maxY) {
             transform.position += new Vector3(0, Time.deltaTime * speed,0);
         }

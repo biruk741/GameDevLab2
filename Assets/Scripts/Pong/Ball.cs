@@ -6,20 +6,51 @@ public class Ball : MonoBehaviour
 {
     [SerializeField] Rigidbody2D rigidBody;
     [SerializeField] private float speed;
+    [SerializeField] private Transform startPos;
+    [SerializeField] private AudioSource bouncePlayer;
+    [SerializeField] private AudioSource bounceEdge;
+    [SerializeField] private AudioSource goalSound;
+
 
 
     private WaitForSeconds beginDelay = new WaitForSeconds(1);
 
-    // Start is called before the first frame update
-    private void Awake()
-    {
+
+    public void Restart() {
         StartCoroutine(moveBall());
     }
 
     IEnumerator moveBall() {
+        transform.position = startPos.position;
+        rigidBody.velocity = Vector3.zero;
         yield return beginDelay;
-        Vector3 vector = new Vector3(Random.Range(-5f, 5f), Random.Range(-3f, 3f), 0);
+        float y;
+        float x = Random.Range(2f, 5f);
+        do
+        {
+            y = Random.Range(0.5f, 1f);
+        } while (Mathf.Abs(y) < 0.4f);
+        if (Random.Range(0f, 1f) > 0.5f)
+        {
+            y = -y;
+        } else x = -x;
+        Vector3 vector = new Vector3(x, y, 0);
         rigidBody.AddForce(vector.normalized * speed);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player")) {
+            bouncePlayer.Play();
+        }
+        if (collision.gameObject.CompareTag("Goal"))
+        {
+            goalSound.Play();
+        }
+        if (collision.gameObject.CompareTag("Edge"))
+        {
+            bounceEdge.Play();
+        }
     }
 
 
