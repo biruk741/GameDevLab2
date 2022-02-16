@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour
 
     IEnumerator moveBall() {
         yield return beginDelay;
-        Vector3 vector = new Vector3(Random.Range(-5f, 5f), Random.Range(-5f, 5f), 0);
+        Vector3 vector = new Vector3(Random.Range(-5f, 5f), Random.Range(-3f, 3f), 0);
         rigidBody.AddForce(vector.normalized * speed);
     }
 
