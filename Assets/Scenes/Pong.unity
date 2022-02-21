@@ -738,6 +738,8 @@ MonoBehaviour:
   bouncePlayer: {fileID: 272136251}
   bounceEdge: {fileID: 272136253}
   goalSound: {fileID: 272136252}
+  renderer: {fileID: 272136248}
+  particle: {fileID: 0}
 --- !u!82 &272136251
 AudioSource:
   m_ObjectHideFlags: 0

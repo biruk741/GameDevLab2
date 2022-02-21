@@ -10,6 +10,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private AudioSource bouncePlayer;
     [SerializeField] private AudioSource bounceEdge;
     [SerializeField] private AudioSource goalSound;
+    [SerializeField] private SpriteRenderer renderer;
 
 
 
@@ -55,8 +56,12 @@ public class Ball : MonoBehaviour
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        float velocity = rigidBody.velocity.magnitude;
+
+        int luminance = (int)(255 - velocity);
+        luminance = (int)(luminance >= 0 ?  luminance * 0.8 : 0);
+        renderer.color = new Color(255, luminance, luminance);
     }
 }
