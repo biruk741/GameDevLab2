@@ -1,3 +1,4 @@
+using BigRookGames.Weapons;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class FPSPlayer : MonoBehaviour
             GameObject bulletPrefab = bullets[Random.Range(0, bullets.Length)];
             GameObject newBullet = Instantiate(bulletPrefab);
             newBullet.transform.SetPositionAndRotation(shootPosition.position, shootPosition.rotation);
-            shootSound.Play();
+            GunfireController.instance.FireWeapon();
             lastShootTime = Time.time;
         }
     }

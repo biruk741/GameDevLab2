@@ -4,6 +4,8 @@ namespace BigRookGames.Weapons
 {
     public class GunfireController : MonoBehaviour
     {
+
+        public static GunfireController instance;
         // --- Audio ---
         public AudioClip GunShotClip;
         public AudioSource source;
@@ -34,7 +36,10 @@ namespace BigRookGames.Weapons
         // --- Timing ---
         [SerializeField] private float timeLastFired;
 
-
+        private void Awake()
+        {
+            instance = this;
+        }
         private void Start()
         {
             if(source != null) source.clip = GunShotClip;
@@ -52,12 +57,14 @@ namespace BigRookGames.Weapons
             }
 
             // --- Fires the weapon if the delay time period has passed since the last shot ---
+            autoFire = false;
             if (autoFire && ((timeLastFired + shotDelay) <= Time.time))
             {
                 FireWeapon();
             }
 
             // --- Toggle scope based on public variable value ---
+
             if(scope && lastScopeState != scopeActive)
             {
                 lastScopeState = scopeActive;
