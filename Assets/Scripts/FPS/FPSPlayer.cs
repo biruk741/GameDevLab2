@@ -20,23 +20,27 @@ public class FPSPlayer : MonoBehaviour
     }
 
     // Update is called once per frame
+
+    private float lastShootTime = 0;
     void Update()
     {
-        if (Input.GetMouseButton(0)) {
+        if (Input.GetMouseButton(0) && Time.time - lastShootTime > 0.1f) {
             GameObject bulletPrefab = bullets[Random.Range(0, bullets.Length)];
             GameObject newBullet = Instantiate(bulletPrefab);
             newBullet.transform.SetPositionAndRotation(shootPosition.position, shootPosition.rotation);
             shootSound.Play();
+            lastShootTime = Time.time;
         }
     }
 
     private float lastHitTime;
 
+    private int health = 0;
     public int Health { 
-        get { return Health; } private set {
-            Health = value;
+        get { return health; } private set {
+            health = value;
             fpsUI.ShowHealthFraction((float)Health / (float)maxHealth);
-            if (Health <= 0)
+            if (health <= 0)
             {
                 LoadingScreen.LoadScene("MainMenu");
             }
