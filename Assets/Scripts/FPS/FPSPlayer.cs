@@ -13,11 +13,15 @@ public class FPSPlayer : MonoBehaviour
     [SerializeField] private AudioSource shootSound;
     [SerializeField] private FPSUI fpsUI;
     [SerializeField] private int maxHealth;
+    [SerializeField] private int maxAmmo = 200;
+
+
     // Start is called before the first frame update
     void Awake()
     {
         instance = this;
         Health = maxHealth;
+        Ammo = maxAmmo;
     }
 
     // Update is called once per frame
@@ -25,11 +29,12 @@ public class FPSPlayer : MonoBehaviour
     private float lastShootTime = 0;
     void Update()
     {
-        if (Input.GetMouseButton(0) && Time.time - lastShootTime > 0.1f) {
+        if (Input.GetMouseButton(0) && Time.time - lastShootTime > 0.1f && Ammo > 0) {
             GameObject bulletPrefab = bullets[Random.Range(0, bullets.Length)];
             GameObject newBullet = Instantiate(bulletPrefab);
             newBullet.transform.SetPositionAndRotation(shootPosition.position, shootPosition.rotation);
             GunfireController.instance.FireWeapon();
+            Ammo--;
             lastShootTime = Time.time;
         }
     }
@@ -46,6 +51,21 @@ public class FPSPlayer : MonoBehaviour
                 LoadingScreen.LoadScene("MainMenu");
             }
         } 
+    }
+
+    private int ammo = 0;
+    public int Ammo
+    {
+        get { return ammo; }
+        private set
+        {
+            ammo = value > maxAmmo ? maxAmmo : value < 0 ? 0 : value;
+            fpsUI.showAmmo(Ammo);
+        }
+    }
+
+    public void IncreaseAmmo() {
+        Ammo += 100;
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
