@@ -12,10 +12,12 @@ public class MainMenuManager : MonoBehaviour
     [SerializeField] private GameObject creditsUI;
     [SerializeField] private Button platformerButton;
     [SerializeField] private Button spawnButton;
+    [SerializeField] private Button FPSButton;
 
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
         startButton.onClick.AddListener(() => {
             doSomething();
         });
@@ -25,11 +27,25 @@ public class MainMenuManager : MonoBehaviour
         closeCreditsButton.onClick.AddListener(() => {
             creditsUI.SetActive(false);
         });
+        Button[] buttons = {
+            platformerButton,
+            spawnButton,
+            FPSButton
+        };
+
+        string[] scenes = {
+            "NotQuitePlatformerScene",
+            "3DSpawn",
+            "FirstPersonShooter"
+        };
         platformerButton.onClick.AddListener(() => {
-            LoadingScreen.LoadScene("NotQuitePlatformerScene");
+            LoadingScreen.LoadScene(scenes[0]);
         });
         spawnButton.onClick.AddListener(() => {
-            LoadingScreen.LoadScene("3DSpawn");
+            LoadingScreen.LoadScene(scenes[1]);
+        });
+        FPSButton.onClick.AddListener(() => {
+            LoadingScreen.LoadScene(scenes[2]);
         });
     }
 
@@ -41,6 +57,6 @@ public class MainMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

@@ -9,6 +9,9 @@ TagManager:
   - Bullet
   - Coin
   - Enemy
+  - Ball
+  - Goal
+  - Edge
   layers:
   - Default
   - TransparentFX
