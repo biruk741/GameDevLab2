@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    private float secondsPerSpawn = 3;
+    private float secondsPerSpawn = 6;
     private float lastSpawnTime = 0;
     [SerializeField] private GameObject[] enemies;
 
@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
     void FixedUpdate()
     {
 
-            secondsPerSpawn -= (0.05f * Time.deltaTime);
+            secondsPerSpawn -= (0.005f * Time.deltaTime);
             if (Time.time - lastSpawnTime >= secondsPerSpawn && FPSPlayer.instance.ShouldSpawn(transform.position))
             {
                 lastSpawnTime = Time.time;

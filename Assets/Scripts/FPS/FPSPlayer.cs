@@ -6,6 +6,10 @@ using UnityEngine.UI;
 
 public class FPSPlayer : MonoBehaviour
 {
+
+    public enum Status { ADS, FREE_AIM}
+    public Status playerStatus = Status.FREE_AIM;
+
     public static FPSPlayer instance;
 
     [SerializeField] private Transform shootPosition;
@@ -19,6 +23,18 @@ public class FPSPlayer : MonoBehaviour
     public AudioSource damageSound;
     public Image damageIndicator;
     public Image ammoIndicator;
+
+    public Transform ADSTransform;
+    public Transform DefaultPosition;
+    public Transform SprintPosition;
+
+    public GameObject gun;
+
+    private float defaultFOV = 63.6f;
+    private float ADS_FOV = 45f;
+
+    public Camera camera;
+
 
 
 
@@ -42,6 +58,34 @@ public class FPSPlayer : MonoBehaviour
             GunfireController.instance.FireWeapon();
             Ammo--;
             lastShootTime = Time.time;
+        }
+
+        if (Input.GetMouseButton(1))
+        {
+            if (playerStatus == Status.FREE_AIM)
+            {
+                gun.transform.SetPositionAndRotation(ADSTransform.position, ADSTransform.rotation);
+                gun.transform.localScale = ADSTransform.localScale;
+                camera.fieldOfView = ADS_FOV;
+                playerStatus = Status.ADS;
+            }
+        }
+        else {
+            if (playerStatus == Status.ADS)
+            {
+                gun.transform.SetPositionAndRotation(DefaultPosition.position, DefaultPosition.rotation);
+                gun.transform.localScale = DefaultPosition.localScale;
+                camera.fieldOfView = defaultFOV;
+                playerStatus = Status.FREE_AIM;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            gun.transform.SetPositionAndRotation(SprintPosition.position, SprintPosition.rotation);
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift)) {
+            gun.transform.SetPositionAndRotation(DefaultPosition.position, DefaultPosition.rotation);
         }
     }
 
@@ -80,6 +124,21 @@ public class FPSPlayer : MonoBehaviour
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Enemy") && (Time.time - lastHitTime > 0.5f))
+        {
+            lastHitTime = Time.time;
+            Destroy(hit.gameObject);
+            if (Health > 0)
+            {
+                Health--;
+                StartCoroutine(showDamageIndicator());
+                damageSound.Play();
+            }
+        }
+    }
+
+    private void OnCollisionEnter(Collision hit)
     {
         if (hit.gameObject.CompareTag("Enemy") && (Time.time - lastHitTime > 0.5f))
         {

@@ -5,7 +5,6 @@ using UnityEngine;
 public class FPSEnemy : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 20;
-    [SerializeField] private Rigidbody rigidbody;
 
     // Start is called before the first frame update
     void Start()
